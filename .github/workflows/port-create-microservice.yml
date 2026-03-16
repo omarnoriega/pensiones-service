@@ -10,8 +10,8 @@ on:
         type: string
 
 env:
-  clientId:     ${{ secrets.PORT_CLIENT_ID }}
-  clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+  CLIENT_ID:     ${{ secrets.PORT_CLIENT_ID }}
+  CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
 
 jobs:
   create-microservice:
@@ -51,8 +51,8 @@ jobs:
         if: success()
         uses: port-labs/port-github-action@v1
         with:
-          #clientId:     ${{ secrets.PORT_CLIENT_ID }}
-          #clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          clientId:     ${{ env.CLIENT_ID }}
+          clientSecret: ${{ env.CLIENT_SECRET }}
           baseUrl:      https://api.getport.io
           operation:    PATCH_RUN
           runId:        ${{ steps.ctx.outputs.run_id }}
