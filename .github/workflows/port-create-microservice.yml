@@ -1,0 +1,36 @@
+# .github/workflows/port-create-microservice.yml
+name: Port - Crear nuevo microservicio
+on:
+  workflow_dispatch:
+    inputs:
+      port_context:
+        required: true
+        description: "Contexto enviado por Port (JSON)"
+        type: string
+jobs:
+  create-microservice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parsear contexto de Port
+        id: ctx
+        run: |
+          echo "nombre=${{ fromJson(inputs.port_context).inputs.serviceName }}" >> $GITHUB_OUTPUT
+          echo "puerto=${{ fromJson(inputs.port_context).inputs.port }}"        >> $GITHUB_OUTPUT
+          echo "owner=${{ fromJson(inputs.port_context).inputs.ownerTeam }}"   >> $GITHUB_OUTPUT
+      - name: Checkout template
+        uses: actions/checkout@v4
+      - name: Crear repositorio desde template
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh repo create ${{ steps.ctx.outputs.nombre }} \
+            --public --clone --template ${{ github.repository }}
+      - name: Notificar exito a Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId:     ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation:    PATCH_RUN
+          runId:        ${{ fromJson(inputs.port_context).runId }}
+          logMessage:   "Microservicio ${{ steps.ctx.outputs.nombre }} creado exitosamente"
+          status:       "SUCCESS"
