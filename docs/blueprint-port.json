@@ -1,0 +1,90 @@
+{
+  "identifier": "microservice",
+  "description": "This blueprint Microservicio represents a service in our software catalog",
+  "title": "Microservicio",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "language": {
+        "type": "string",
+        "title": "Lenguaje",
+        "enum": [
+          "Java",
+          "Python",
+          "Node.js",
+          "Go"
+        ],
+        "default": "Java"
+      },
+      "javaVersion": {
+        "type": "string",
+        "title": "Version de Java"
+      },
+      "port": {
+        "type": "number",
+        "title": "Puerto"
+      },
+      "dockerImage": {
+        "type": "string",
+        "title": "Imagen Docker Hub",
+        "format": "url"
+      },
+      "swaggerUrl": {
+        "type": "string",
+        "title": "Swagger UI",
+        "format": "url"
+      },
+      "tier": {
+        "type": "string",
+        "title": "Tier",
+        "enum": [
+          "Tier 1 - Critical",
+          "Tier 2 - Standard",
+          "Tier 3 - Internal"
+        ],
+        "default": "Tier 2 - Standard"
+      },
+      "hasReadme": {
+        "type": "boolean",
+        "title": "Tiene README",
+        "default": false
+      },
+      "hasDockerfile": {
+        "type": "boolean",
+        "title": "Tiene Dockerfile",
+        "default": false
+      },
+      "hasHealthCheck": {
+        "type": "boolean",
+        "title": "Tiene Health Check",
+        "default": false
+      },
+      "onCallDefined": {
+        "type": "boolean",
+        "title": "On-call definido",
+        "default": false
+      },
+      "repoUrl": {
+        "type": "string",
+        "title": "Repositorio GitHub",
+        "format": "url"
+      },
+      "url": {
+        "type": "string",
+        "title": "Github URL",
+        "icon": "Github",
+        "format": "url",
+        "description": "the link to the repo in our github"
+      }
+    },
+    "required": [
+      "language",
+      "port",
+      "tier"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

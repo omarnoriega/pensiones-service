@@ -1,0 +1,20 @@
+# .github/port.yml
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"microservice"'
+          properties:
+            repoUrl:        .html_url
+            language:       '"Java"'
+            javaVersion:    '"17"'
+            port:           8080
+            tier:           '"Tier 2 - Standard"'
+            hasReadme:      '(.topics // [] | map(select(.=="has-readme"))      | length > 0)'
+            hasDockerfile:  '(.topics // [] | map(select(.=="has-dockerfile"))  | length > 0)'
+            hasHealthCheck: '(.topics // [] | map(select(.=="has-healthcheck")) | length > 0)'
